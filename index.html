@@ -58,12 +58,12 @@
             text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
         }
         .verse {
-            font-size: 2.4vw; /* Responsive font size based on viewport width */
+            font-size: 240%; /* Responsive font size based on card size */
             color: #333;
             margin-bottom: 20px;
         }
         .explanation {
-            font-size: 1.4vw; /* Responsive font size based on viewport width */
+            font-size: 140%; /* Responsive font size based on card size */
             color: #555;
             line-height: 1.6;
         }
@@ -146,7 +146,7 @@
         <button class="arrow-button" onclick="changeContent(1)">&gt;</button>
     </div>
     <div class="counter" id="counter">
-        الخلفية: 1 | النص: 1 | لون النص: 1
+        الخلفية: 1 | حجم النص: 1 | لون النص: 1
     </div>
     <div class="checkbox-container">
         <div class="form-check">
@@ -162,15 +162,17 @@
             </label>
         </div>
     </div>
-    <a id="btn-Convert-Html2Image" class="btn btn-success" href="#">Download</a>
+    <a id="btn-Convert-Html2Image" class="btn btn-success" href="#">حفظ الصورة</a>
 
     <script>
         let currentBackground = 1;
-        let currentTextSizeIndex = 6;
+        let currentTextSizeIndex = 10;
         let currentTextColorIndex = 0;
         let mode = 'background';
 
-        const textSizes = [ 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 1, 1.05, 1.1, 1.15, 1.2, 1.25, 1.3 ];
+        const textSizes = [ 0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95, 
+                            1,
+                            1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5 ];
 
         const textColors = [
             { color: '#2c3e50' },
@@ -204,8 +206,8 @@
             } else if (mode === 'textSize') {
                 currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
                 const sizeFactor = textSizes[currentTextSizeIndex];
-                document.getElementById('verse').style.fontSize = `${2.4*sizeFactor}vw`;
-                document.getElementById('explanation').style.fontSize = `${1.4*sizeFactor}vw`;
+                document.getElementById('verse').style.fontSize = `${240 * sizeFactor}%`;
+                document.getElementById('explanation').style.fontSize = `${140 * sizeFactor}%`;
             }
             updateCounter();
         }
