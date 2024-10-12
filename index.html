@@ -44,7 +44,7 @@
             align-items: center;
         }
         .card-body {
-            padding: 20px; /* Adjust padding for smaller screens */
+            padding: 40px; /* Adjust padding for smaller screens */
             background-color: rgba(255, 255, 255, 0.0);
             border-radius: 10px;
             text-align: center;
@@ -58,12 +58,12 @@
             text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
         }
         .verse {
-            font-size: 240%; /* Responsive font size based on card size */
+            font-size: 36px; /* Responsive font size based on card size */
             color: #333;
             margin-bottom: 20px;
         }
         .explanation {
-            font-size: 140%; /* Responsive font size based on card size */
+            font-size: 21px; /* Responsive font size based on card size */
             color: #555;
             line-height: 1.6;
         }
@@ -206,8 +206,8 @@
             } else if (mode === 'textSize') {
                 currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
                 const sizeFactor = textSizes[currentTextSizeIndex];
-                document.getElementById('verse').style.fontSize = `${240 * sizeFactor}%`;
-                document.getElementById('explanation').style.fontSize = `${140 * sizeFactor}%`;
+                document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
+                document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
             }
             updateCounter();
         }
