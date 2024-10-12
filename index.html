@@ -278,6 +278,21 @@
             document.getElementById('explanation').contentEditable = isEditable;
         }
 
+        function onPageLoad() {
+            currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
+            const sizeFactor = textSizes[currentTextSizeIndex];
+            if (window.screen.width > 800) {
+                document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
+                document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
+            }
+            else {
+                document.getElementById('verse').style.fontSize = `${24 * sizeFactor}px`;
+                document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
+            }
+        }
+        
+        window.onload = onPageLoad;
+
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
             html2canvas(document.querySelector("#card"), { scale: 10 }).then(canvas => {
                 canvas.toBlob(function (blob) {
@@ -293,16 +308,6 @@
             });
         });
 
-        currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
-        const sizeFactor = textSizes[currentTextSizeIndex];
-        if (window.screen.width > 800) {
-            document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
-            document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
-        }
-        else {
-            document.getElementById('verse').style.fontSize = `${24 * sizeFactor}px`;
-            document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
-        }
     </script>
 </body>
 
