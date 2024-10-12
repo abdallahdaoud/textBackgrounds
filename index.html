@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تصميم بطاقة للآية والفائدة</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+        .card-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .card {
+            width: 450px;
+            height: 450px; 
+            border: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-image: url('background1.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card-body {
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.0); /* Semi-transparent white background for text readability */
+            border-radius: 10px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100%;
+        }
+        .verse, .explanation {
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6); /* Subtle white shadow */
+        }
+        .verse {
+            font-size: 2.2rem; /* Increased font size */
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .explanation {
+            font-size: 1.3rem; /* Increased font size */
+            color: #555;
+            line-height: 1.6;
+        }
+        .qq {
+            font-family: 'Noto Sans', 'Arial Unicode MS', sans-serif;
+        }
+        .arrow-button {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: none;
+            font-size: 2rem;
+            color: #333;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            margin: 0 10px;
+        }
+        .control-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .control-button {
+            margin: 0 5px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        .active {
+            background-color: teal;
+            color: white;
+        }
+        .counter {
+            margin-top: 10px;
+            font-size: 1.2rem;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="control-buttons">
+        <button class="control-button btn btn-secondary" onclick="setMode('textColor', this)">لون النص</button>
+        <button class="control-button btn btn-secondary" onclick="setMode('text', this)">النص</button>
+        <button class="control-button btn btn-secondary active" onclick="setMode('background', this)">الخلفية</button>
+    </div>
+    <div class="card-container">
+        <button class="arrow-button" onclick="changeContent(-1)">&lt;</button>
+        <div class="card" id="card">
+            <div class="card-body">
+                <div class="verse" id="verse">
+                    <span class="qq">﴾</span>
+                    أَعُوذُ بِرَبِّ النَّاسِ
+                    <span class="qq">﴿</span>
+                </div>
+                <div class="explanation" id="explanation">
+                    العياذ به وله، الالتجاء والاعتصام والاحتراز يكون له! لا يلتجئ قلبي في الشدائد إلا له، ولا أعتصم إلا بالله الذي هو رَبُّ كل الناس! أين قلبي من الاعتصام بربّ كل الناس…
+                </div>
+            </div>
+        </div>
+        <button class="arrow-button" onclick="changeContent(1)">&gt;</button>
+    </div>
+    <div class="counter" id="counter">
+        الخلفية: 1 | النص: 1 | لون النص: 1
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="textShadowToggle" checked onchange="toggleTextShadow()">
+        <label class="form-check-label" for="textShadowToggle">
+            استخدام ظل النص
+        </label>
+    </div>
+    <a id="btn-Convert-Html2Image" class="btn btn-success" href="#">Download</a>
+
+    <script>
+        let currentBackground = 1;
+        let currentTextIndex = 0;
+        let currentTextColorIndex = 0;
+        let mode = 'background';
+
+        const texts = [
+            { verse: "أَعُوذُ بِرَبِّ النَّاسِ", explanation: "العياذ به وله، الالتجاء والاعتصام والاحتراز يكون له!" },
+            { verse: "مَلِكِ النَّاسِ", explanation: "الله هو الملك الحقيقي لكل الناس." },
+            { verse: "إِلَٰهِ النَّاسِ", explanation: "الله هو الإله الذي يُعبد بحق." }
+        ];
+
+        const textColors = [
+            { color: '#2c3e50' },
+            { color: '#8e44ad' },
+            { color: '#e74c3c' },
+            { color: '#16a085' },
+            { color: '#f39c12' },
+            { color: '#2980b9' }
+        ];
+
+        function setMode(newMode, button) {
+            mode = newMode;
+            document.querySelectorAll('.control-button').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+        }
+
+        function changeContent(direction) {
+            if (mode === 'background') {
+                currentBackground += direction;
+                if (currentBackground < 1) {
+                    currentBackground = 25;
+                } else if (currentBackground > 25) {
+                    currentBackground = 1;
+                }
+                document.getElementById('card').style.backgroundImage = `url('background${currentBackground}.jpeg')`;
+            } else if (mode === 'textColor') {
+                currentTextColorIndex = (currentTextColorIndex + direction + textColors.length) % textColors.length;
+                const colorInfo = textColors[currentTextColorIndex];
+                document.getElementById('verse').style.color = colorInfo.color;
+                document.getElementById('explanation').style.color = colorInfo.color;
+            } else if (mode === 'text') {
+                currentTextIndex = (currentTextIndex + direction + texts.length) % texts.length;
+                document.getElementById('verse').innerHTML = `<span class="qq">﴾</span> ${texts[currentTextIndex].verse} <span class="qq">﴿</span>`;
+                document.getElementById('explanation').textContent = texts[currentTextIndex].explanation;
+            }
+            updateCounter();
+        }
+
+        function updateCounter() {
+            document.getElementById('counter').textContent = `الخلفية: ${currentBackground} | النص: ${currentTextIndex + 1} | لون النص: ${currentTextColorIndex + 1}`;
+        }
+
+        function toggleTextShadow() {
+            const isChecked = document.getElementById('textShadowToggle').checked;
+            const textShadowValue = isChecked ? '1px 1px 3px rgba(255, 255, 255, 0.6)' : 'none';
+            document.getElementById('verse').style.textShadow = textShadowValue;
+            document.getElementById('explanation').style.textShadow = textShadowValue;
+        }
+
+        document.getElementById('btn-Convert-Html2Image').addEventListener('click', function() {
+            html2canvas(document.querySelector("#card")).then(canvas => {
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'card.png';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
