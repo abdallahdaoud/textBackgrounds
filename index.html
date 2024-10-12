@@ -56,7 +56,7 @@
         }
 
         #cardBody {
-            /* padding: 40px; */
+            padding: 40px;
             /* Adjust padding for smaller screens */
             background-color: rgba(255, 255, 255, 0.0);
             border-radius: 10px;
@@ -283,12 +283,12 @@
             currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
             const sizeFactor = textSizes[currentTextSizeIndex];
             if (window.screen.width > 800) {
-                document.getElementById('cardBody').style.padding = '40px';
+                document.getElementById('cardBody').style.padding = "40px";
                 document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
                 document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
             }
             else {
-                document.getElementById('cardBody').style.padding = '30px';
+                document.getElementById('cardBody').style.padding = "30px";
                 document.getElementById('verse').style.fontSize = `${24 * sizeFactor}px`;
                 document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
             }
