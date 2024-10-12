@@ -16,16 +16,24 @@
             height: 100vh;
             margin: 0;
             flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
         }
         .card-container {
             position: relative;
             display: flex;
             align-items: center;
+            justify-content: center; /* Center the card container */
             margin-bottom: 20px;
+            width: 100%;
+            max-width: 100%; /* Ensure it doesn't exceed the screen width */
+            padding: 0 10px; /* Add some padding for better appearance */
+            box-sizing: border-box; /* Include padding in width calculation */
         }
         .card {
-            width: 450px;
-            height: 450px; 
+            width: 100%;
+            max-width: 450px; /* Limit the maximum width */
+            height: auto; /* Allow height to adjust */
+            aspect-ratio: 1; /* Maintain a square aspect ratio */
             border: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-image: url('background1.jpeg');
@@ -36,8 +44,8 @@
             align-items: center;
         }
         .card-body {
-            padding: 40px;
-            background-color: rgba(255, 255, 255, 0.0); /* Semi-transparent white background for text readability */
+            padding: 20px; /* Adjust padding for smaller screens */
+            background-color: rgba(255, 255, 255, 0.0);
             border-radius: 10px;
             text-align: center;
             display: flex;
@@ -46,15 +54,15 @@
             height: 100%;
         }
         .verse, .explanation {
-            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6); /* Subtle white shadow */
+            text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.6);
         }
         .verse {
-            font-size: 2.2rem; /* Increased font size */
+            font-size: 1.8rem; /* Adjust font size for better fit */
             color: #333;
             margin-bottom: 20px;
         }
         .explanation {
-            font-size: 1.3rem; /* Increased font size */
+            font-size: 1rem; /* Adjust font size for better fit */
             color: #555;
             line-height: 1.6;
         }
@@ -64,27 +72,28 @@
         .arrow-button {
             background-color: rgba(255, 255, 255, 0.7);
             border: none;
-            font-size: 2rem;
+            font-size: 1.5rem; /* Adjust font size for smaller screens */
             color: #333;
-            width: 50px;
-            height: 50px;
+            width: 40px; /* Adjust size for smaller screens */
+            height: 40px; /* Adjust size for smaller screens */
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
             border-radius: 50%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            margin: 0 10px;
+            margin: 0 5px; /* Adjust margin for smaller screens */
         }
         .control-buttons {
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
         }
         .control-button {
-            margin: 0 5px;
-            padding: 10px 20px;
-            font-size: 1rem;
+            margin: 5px; /* Adjust margin for better spacing */
+            padding: 8px 16px; /* Adjust padding for smaller screens */
+            font-size: 0.9rem; /* Adjust font size for smaller screens */
             cursor: pointer;
         }
         .active {
@@ -93,14 +102,15 @@
         }
         .counter {
             margin-top: 10px;
-            font-size: 1.2rem;
+            font-size: 1rem; /* Adjust font size for smaller screens */
         }
         .checkbox-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
+            gap: 10px; /* Adjust gap for smaller screens */
             margin-bottom: 20px;
+            flex-wrap: wrap; /* Allow checkboxes to wrap on smaller screens */
         }
         .form-check {
             display: flex;
