@@ -55,8 +55,8 @@
             align-items: center;
         }
 
-        #card-body {
-            padding: 40px;
+        #cardBody {
+            /* padding: 40px; */
             /* Adjust padding for smaller screens */
             background-color: rgba(255, 255, 255, 0.0);
             border-radius: 10px;
@@ -174,7 +174,7 @@
     <div class="card-container">
         <button class="arrow-button" onclick="changeContent(-1)">&lt;</button>
         <div class="card" id="card">
-            <div id="card-body">
+            <div id="cardBody">
                 <div class="verse" id="verse" contenteditable="false">
                     <span class="qq">﴾</span>
                     أَعُوذُ بِرَبِّ النَّاسِ
@@ -249,7 +249,7 @@
             } else if (mode === 'textSize') {
                 currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
                 const sizeFactor = textSizes[currentTextSizeIndex];
-                if (window.screen.width > 700) {
+                if (window.screen.width > 800) {
                     document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
                     document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
                 }
@@ -283,12 +283,12 @@
             currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
             const sizeFactor = textSizes[currentTextSizeIndex];
             if (window.screen.width > 800) {
-                document.getElementById('card-body').style.padding = '25px';
+                document.getElementById('cardBody').style.padding = '40px';
                 document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
                 document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
             }
             else {
-                document.getElementById('card-body').style.padding = '40px';
+                document.getElementById('cardBody').style.padding = '30px';
                 document.getElementById('verse').style.fontSize = `${24 * sizeFactor}px`;
                 document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
             }
