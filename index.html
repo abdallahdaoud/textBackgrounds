@@ -279,6 +279,7 @@
         }
 
         function onPageLoad() {
+            const direction = 0;
             currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
             const sizeFactor = textSizes[currentTextSizeIndex];
             if (window.screen.width > 800) {
