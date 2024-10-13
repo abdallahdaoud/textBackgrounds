@@ -160,6 +160,7 @@
     <div class="control-buttons">
         <button class="control-button btn btn-secondary" onclick="setMode('textColor', this)">لون النص</button>
         <button class="control-button btn btn-secondary" onclick="setMode('textSize', this)">حجم النص</button>
+        <button class="control-button btn btn-secondary" onclick="setMode('textContent', this)">النص</button>
         <button class="control-button btn btn-secondary active" onclick="setMode('background', this)">الخلفية</button>
     </div>
     <div class="card-container">
@@ -168,24 +169,23 @@
             <div id="cardBody">
                 <div class="verse" id="verse" contenteditable="false">
                     <span class="qq">﴿</span>
-                    أَعُوذُ بِرَبِّ النَّاسِ
+                    مِن شَرِّ مَا خَلَقَ
                     <span class="qq">﴾</span>
                 </div>
                 <div class="explanation" id="explanation" contenteditable="false">
-                    ❞ 
-                    العياذ به وله، الالتجاء والاعتصام والاحتراز يكون له! لا يلتجئ قلبي في الشدائد إلا له، ولا أعتصم إلا
-                    بالله الذي هو رَبُّ كل الناس! أين قلبي من الاعتصام بربّ كل الناس
+                    ❞
+                    نستعيذ بالخالق من شر ما خلق، لا بمن لا يملكون الحماية كالجن
                     ❝
                 </div>
                 <div class="author" id="author">
-                    - الشيخ عبدالرحمن -
+                    - آل إثمار -
                 </div>
             </div>
         </div>
         <button class="arrow-button" onclick="changeContent(1)">&gt;</button>
     </div>
     <div class="counter" id="counter">
-        الخلفية: 1 | حجم النص: 1 | لون النص: 1
+        الخلفية: 1 | حجم النص: 1 | لون النص: 1 | النص: 1
     </div>
     <div class="checkbox-container">
         <div class="form-check">
@@ -207,7 +207,8 @@
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="explanationToggle" checked onchange="toggleExplanation()">
+            <input class="form-check-input" type="checkbox" id="explanationToggle" checked
+                onchange="toggleExplanation()">
             <label class="form-check-label" for="explanationToggle">
                 النص
             </label>
@@ -229,6 +230,7 @@
         let currentBackground = 1;
         let currentTextSizeIndex = 10;
         let currentTextColorIndex = 0;
+        let currentTextIndex = 0;
         let mode = 'background';
 
         const textSizes = [0.5, 0.55, 0.6, 0.65, 0.7, 0.75, 0.8, 0.85, 0.9, 0.95,
@@ -258,6 +260,16 @@
             { color: '#2ecc71' }, // Emerald
             { color: '#ffffff' }  // White
         ];
+
+        const texts = [];
+
+        // Fetch data from the JSON API
+        fetch('https://abdallahdaoud.github.io/cardsJSON/data.json')
+            .then(response => response.json())
+            .then(data => {
+                texts.push(...data);
+            })
+            .catch(error => console.error('Error fetching data:', error));
 
         function setMode(newMode, button) {
             mode = newMode;
@@ -293,12 +305,18 @@
                     document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
                     document.getElementById('author').style.fontSize = `${12 * sizeFactor}px`;
                 }
+            } else if (mode === 'textContent') {
+                currentTextIndex = (currentTextIndex + direction + texts.length) % texts.length;
+                const textInfo = texts[currentTextIndex];
+                document.getElementById('verse').innerHTML = `<span class="qq">﴿</span> ${textInfo.verse} <span class="qq">﴾</span>`;
+                document.getElementById('explanation').textContent = "❞ " + textInfo.explanation + " ❝";
+                document.getElementById('author').textContent = "- " + textInfo.author + " -";
             }
             updateCounter();
         }
 
         function updateCounter() {
-            document.getElementById('counter').textContent = `الخلفية: ${currentBackground} | حجم النص: ${textSizes[currentTextSizeIndex]} | لون النص: ${currentTextColorIndex + 1}`;
+            document.getElementById('counter').textContent = `الخلفية: ${currentBackground} | حجم النص: ${textSizes[currentTextSizeIndex]} | لون النص: ${currentTextColorIndex + 1} | النص: ${currentTextIndex + 1}`;
         }
 
         function toggleTextShadow() {
