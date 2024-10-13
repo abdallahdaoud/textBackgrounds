@@ -186,7 +186,7 @@
         <button class="arrow-button" onclick="changeContent(1)">&gt;</button>
     </div>
     <div class="counter" id="counter">
-        الخلفية: 1 | حجم النص: 1 | لون النص: 1 | النص: 1
+        الخلفية: 1 | حجم النص: 1 | لون النص: 1 | النص: 0
     </div>
     <div class="checkbox-container">
         <div class="form-check">
@@ -323,7 +323,7 @@
         }
 
         function updateCounter() {
-            document.getElementById('counter').textContent = `الخلفية: ${currentBackground} | حجم النص: ${textSizes[currentTextSizeIndex]} | لون النص: ${currentTextColorIndex + 1} | النص: ${currentTextIndex + 1}`;
+            document.getElementById('counter').textContent = `الخلفية: ${currentBackground} | حجم النص: ${textSizes[currentTextSizeIndex]} | لون النص: ${currentTextColorIndex + 1} | النص: ${currentTextIndex}`;
         }
 
         function toggleTextShadow() {
