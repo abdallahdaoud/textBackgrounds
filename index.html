@@ -14,11 +14,10 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             flex-direction: column;
             overflow-x: hidden;
-            /* Prevent horizontal scrolling */
         }
 
         .card-container {
@@ -26,25 +25,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Center the card container */
             margin-bottom: 20px;
             width: 100%;
             max-width: 100%;
-            /* Ensure it doesn't exceed the screen width */
             padding: 0 10px;
-            /* Add some padding for better appearance */
             box-sizing: border-box;
-            /* Include padding in width calculation */
         }
 
         .card {
+            direction: rtl;
             width: 100%;
             max-width: 450px;
-            /* Limit the maximum width */
             height: auto;
-            /* Allow height to adjust */
             aspect-ratio: 1;
-            /* Maintain a square aspect ratio */
             border: none;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             background-image: url('background1.jpeg');
@@ -57,7 +50,6 @@
 
         #cardBody {
             padding: 40px;
-            /* Adjust padding for smaller screens */
             background-color: rgba(255, 255, 255, 0.0);
             border-radius: 10px;
             text-align: center;
@@ -65,9 +57,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            /* Center content horizontally */
             height: 100%;
-            /* Ensure full height for vertical centering */
         }
 
         .verse,
@@ -77,16 +67,20 @@
 
         .verse {
             font-size: 36px;
-            /* Responsive font size based on card size */
-            color: #333;
+            color: #2c3e50;
             margin-bottom: 20px;
         }
 
         .explanation {
             font-size: 21px;
-            /* Responsive font size based on card size */
-            color: #555;
+            color: #2c3e50;
             line-height: 1.6;
+        }
+
+        .author {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-top: 10px;
         }
 
         .qq {
@@ -97,12 +91,9 @@
             background-color: rgba(255, 255, 255, 0.7);
             border: none;
             font-size: 1.5rem;
-            /* Adjust font size for smaller screens */
             color: #333;
             width: 40px;
-            /* Adjust size for smaller screens */
             height: 40px;
-            /* Adjust size for smaller screens */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -110,7 +101,6 @@
             border-radius: 50%;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
             margin: 0 5px;
-            /* Adjust margin for smaller screens */
         }
 
         .control-buttons {
@@ -118,16 +108,12 @@
             justify-content: center;
             margin-bottom: 20px;
             flex-wrap: wrap;
-            /* Allow buttons to wrap on smaller screens */
         }
 
         .control-button {
             margin: 5px;
-            /* Adjust margin for better spacing */
             padding: 8px 16px;
-            /* Adjust padding for smaller screens */
             font-size: 0.9rem;
-            /* Adjust font size for smaller screens */
             cursor: pointer;
         }
 
@@ -139,7 +125,6 @@
         .counter {
             margin-top: 10px;
             font-size: 1rem;
-            /* Adjust font size for smaller screens */
         }
 
         .checkbox-container {
@@ -147,10 +132,8 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            /* Adjust gap for smaller screens */
             margin-bottom: 20px;
             flex-wrap: wrap;
-            /* Allow checkboxes to wrap on smaller screens */
         }
 
         .form-check {
@@ -160,6 +143,14 @@
 
         .form-check-label {
             margin-left: 5px;
+        }
+
+        .upload-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -176,13 +167,18 @@
         <div class="card" id="card">
             <div id="cardBody">
                 <div class="verse" id="verse" contenteditable="false">
-                    <span class="qq">﴾</span>
-                    أَعُوذُ بِرَبِّ النَّاسِ
                     <span class="qq">﴿</span>
+                    أَعُوذُ بِرَبِّ النَّاسِ
+                    <span class="qq">﴾</span>
                 </div>
                 <div class="explanation" id="explanation" contenteditable="false">
+                    ❞ 
                     العياذ به وله، الالتجاء والاعتصام والاحتراز يكون له! لا يلتجئ قلبي في الشدائد إلا له، ولا أعتصم إلا
                     بالله الذي هو رَبُّ كل الناس! أين قلبي من الاعتصام بربّ كل الناس
+                    ❝
+                </div>
+                <div class="author" id="author">
+                    - الشيخ عبدالرحمن -
                 </div>
             </div>
         </div>
@@ -193,19 +189,41 @@
     </div>
     <div class="checkbox-container">
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="textShadowToggle" checked onchange="toggleTextShadow()">
-            <label class="form-check-label" for="textShadowToggle">
-                استخدام ظل النص
+            <input class="form-check-input" type="checkbox" id="editTextToggle" onchange="toggleTextEdit()">
+            <label class="form-check-label" for="editTextToggle">
+                تعديل
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="editTextToggle" onchange="toggleTextEdit()">
-            <label class="form-check-label" for="editTextToggle">
-                تعديل النص
+            <input class="form-check-input" type="checkbox" id="textShadowToggle" checked onchange="toggleTextShadow()">
+            <label class="form-check-label" for="textShadowToggle">
+                ظل النص
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="authorToggle" checked onchange="toggleAuthor()">
+            <label class="form-check-label" for="authorToggle">
+                الكاتب
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="explanationToggle" checked onchange="toggleExplanation()">
+            <label class="form-check-label" for="explanationToggle">
+                النص
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="verseToggle" checked onchange="toggleVerse()">
+            <label class="form-check-label" for="verseToggle">
+                العنوان
             </label>
         </div>
     </div>
-    <a id="btn-Convert-Html2Image" class="btn btn-success" href="#">حفظ الصورة</a>
+    <div class="upload-container">
+        <label for="imageUpload" class="btn btn-primary">تحميل صورة</label>
+        <input type="file" id="imageUpload" accept="image/*" onchange="uploadImage()" style="display: none;">
+        <a id="btn-Convert-Html2Image" class="btn btn-success" href="#">حفظ الصورة</a>
+    </div>
 
     <script>
         let currentBackground = 1;
@@ -218,12 +236,27 @@
             1.05, 1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5];
 
         const textColors = [
-            { color: '#2c3e50' },
-            { color: '#8e44ad' },
-            { color: '#e74c3c' },
-            { color: '#16a085' },
-            { color: '#f39c12' },
-            { color: '#2980b9' }
+            { color: '#2c3e50' }, // Midnight Blue
+            { color: '#8e44ad' }, // Wisteria
+            { color: '#e74c3c' }, // Alizarin
+            { color: '#16a085' }, // Green Sea
+            { color: '#f39c12' }, // Orange
+            { color: '#2980b9' }, // Belize Hole
+            { color: '#d35400' }, // Pumpkin
+            { color: '#c0392b' }, // Red
+            { color: '#27ae60' }, // Green
+            { color: '#3498db' }, // Blue
+            { color: '#9b59b6' }, // Amethyst
+            { color: '#34495e' }, // Wet Asphalt
+            { color: '#f1c40f' }, // Sunflower
+            { color: '#e67e22' }, // Carrot
+            { color: '#1abc9c' }, // Turquoise
+            { color: '#ecf0f1' }, // Clouds
+            { color: '#95a5a6' }, // Concrete
+            { color: '#7f8c8d' }, // Asbestos
+            { color: '#bdc3c7' }, // Silver
+            { color: '#2ecc71' }, // Emerald
+            { color: '#ffffff' }  // White
         ];
 
         function setMode(newMode, button) {
@@ -246,16 +279,19 @@
                 const colorInfo = textColors[currentTextColorIndex];
                 document.getElementById('verse').style.color = colorInfo.color;
                 document.getElementById('explanation').style.color = colorInfo.color;
+                document.getElementById('author').style.color = colorInfo.color;
             } else if (mode === 'textSize') {
                 currentTextSizeIndex = (currentTextSizeIndex + direction + textSizes.length) % textSizes.length;
                 const sizeFactor = textSizes[currentTextSizeIndex];
                 if (window.screen.width > 800) {
                     document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
                     document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
+                    document.getElementById('author').style.fontSize = `${18 * sizeFactor}px`;
                 }
                 else {
                     document.getElementById('verse').style.fontSize = `${24 * sizeFactor}px`;
                     document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
+                    document.getElementById('author').style.fontSize = `${12 * sizeFactor}px`;
                 }
             }
             updateCounter();
@@ -270,12 +306,41 @@
             const textShadowValue = isChecked ? '1px 1px 3px rgba(255, 255, 255, 0.6)' : 'none';
             document.getElementById('verse').style.textShadow = textShadowValue;
             document.getElementById('explanation').style.textShadow = textShadowValue;
+            document.getElementById('author').style.textShadow = textShadowValue;
         }
 
         function toggleTextEdit() {
             const isEditable = document.getElementById('editTextToggle').checked;
             document.getElementById('verse').contentEditable = isEditable;
             document.getElementById('explanation').contentEditable = isEditable;
+            document.getElementById('author').contentEditable = isEditable;
+        }
+
+        function toggleVerse() {
+            const isChecked = document.getElementById('verseToggle').checked;
+            document.getElementById('verse').style.display = isChecked ? 'block' : 'none';
+        }
+
+        function toggleExplanation() {
+            const isChecked = document.getElementById('explanationToggle').checked;
+            document.getElementById('explanation').style.display = isChecked ? 'block' : 'none';
+        }
+
+        function toggleAuthor() {
+            const isChecked = document.getElementById('authorToggle').checked;
+            document.getElementById('author').style.display = isChecked ? 'block' : 'none';
+        }
+
+        function uploadImage() {
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById('card').style.backgroundImage = `url('${e.target.result}')`;
+                };
+                reader.readAsDataURL(file);
+            }
         }
 
         function onPageLoad() {
@@ -286,14 +351,17 @@
                 document.getElementById('cardBody').style.padding = "40px";
                 document.getElementById('verse').style.fontSize = `${36 * sizeFactor}px`;
                 document.getElementById('explanation').style.fontSize = `${21 * sizeFactor}px`;
+                document.getElementById('author').style.fontSize = `${18 * sizeFactor}px`;
             }
             else {
                 document.getElementById('cardBody').style.padding = "30px";
                 document.getElementById('verse').style.fontSize = `${24 * sizeFactor}px`;
                 document.getElementById('explanation').style.fontSize = `${14 * sizeFactor}px`;
+                document.getElementById('author').style.fontSize = `${12 * sizeFactor}px`;
+
             }
         }
-        
+
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
