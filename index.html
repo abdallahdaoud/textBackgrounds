@@ -156,7 +156,6 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
 </head>
 
 <body>
@@ -390,33 +389,18 @@
 
         window.onload = onPageLoad;
 
-        // document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-        //     html2canvas(document.querySelector("#card"), { scale: 2 }).then(canvas => {
-        //         canvas.toBlob(function (blob) {
-        //             const url = URL.createObjectURL(blob);
-        //             const a = document.createElement('a');
-        //             a.href = url;
-        //             a.download = 'card.jpeg';
-        //             document.body.appendChild(a);
-        //             a.click();
-        //             document.body.removeChild(a);
-        //             URL.revokeObjectURL(url);
-        //         }, 'image/jpeg', 0.95);
-        //     });
-        // });
-        
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            var node = document.getElementById('card');
-
-            domtoimage.toPng(node)
-            .then(function (dataUrl) {
-                var link = document.createElement('a');
-                link.download = 'card.png';
-                link.href = dataUrl;
-                link.click();
-            })
-            .catch(function (error) {
-                console.error('Oops, something went wrong!', error);
+            html2canvas(document.querySelector("#card"), { scale: 3 }).then(canvas => {
+                canvas.toBlob(function (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'card.jpeg';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                }, 'image/jpeg', 0.95);
             });
         });
 
