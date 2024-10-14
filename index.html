@@ -33,6 +33,13 @@
             box-sizing: border-box;
         }
 
+        .card-warper {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 465px;
+            height: auto;
+        }
+
         .card {
             direction: rtl;
             width: 100%;
@@ -40,7 +47,7 @@
             height: auto;
             aspect-ratio: 1;
             border: none;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
             background-image: url('background1.jpeg');
             background-size: cover;
             background-position: center;
@@ -167,21 +174,23 @@
     </div>
     <div class="card-container">
         <button class="arrow-button" onclick="changeContent(-1)">&lt;</button>
-        <div class="card" id="card">
-            <div id="cardBody">
-                <div class="verse" id="verse" contenteditable="false">
-                    العنوان أو
-                    <span class="qq">﴿</span>
-                    الآية
-                    <span class="qq">﴾</span>
-                </div>
-                <div class="explanation" id="explanation" contenteditable="false">
-                    ❞
-                    النص
-                    ❝
-                </div>
-                <div class="author" id="author">
-                    - الكاتب -
+        <div class="card-warper">
+            <div class="card" id="card">
+                <div id="cardBody">
+                    <div class="verse" id="verse" contenteditable="false">
+                        العنوان أو
+                        <span class="qq">﴿</span>
+                        الآية
+                        <span class="qq">﴾</span>
+                    </div>
+                    <div class="explanation" id="explanation" contenteditable="false">
+                        ❞
+                        النص
+                        ❝
+                    </div>
+                    <div class="author" id="author">
+                        - الكاتب -
+                    </div>
                 </div>
             </div>
         </div>
@@ -395,12 +404,12 @@
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'card.png';
+                    a.download = 'card.jpeg';
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                }, 'image/png', 0.95);
+                }, 'image/jpeg', 0.95);
             });
         });
 
