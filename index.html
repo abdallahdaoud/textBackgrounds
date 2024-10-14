@@ -390,13 +390,7 @@
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            const scaleFactor = window.devicePixelRatio || 1; // Or set to 3 or 4
-
-            html2canvas(document.querySelector("#card"), {
-                scale: scaleFactor,
-                useCORS: true,
-                letterRendering: true, // Optional: Improves text clarity
-            }).then(canvas => {
+            html2canvas(document.querySelector("#card"), { scale: 2 }).then(canvas => {
                 canvas.toBlob(function (blob) {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
