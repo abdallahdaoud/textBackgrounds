@@ -390,7 +390,7 @@
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            const scaleFactor = window.devicePixelRatio || 4; // Or set to 3 or 4
+            const scaleFactor = window.devicePixelRatio || 1; // Or set to 3 or 4
 
             html2canvas(document.querySelector("#card"), {
                 scale: scaleFactor,
