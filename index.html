@@ -155,7 +155,7 @@
             margin-bottom: 20px;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rasterizehtml/1.2.4/rasterizeHTML.allinone.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 
 <body>
@@ -390,21 +390,17 @@
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            const cardElement = document.getElementById('card');
-            const canvas = document.createElement('canvas');
-            const scaleFactor = window.devicePixelRatio || 1;
+            html2canvas(document.querySelector("#card"), { scale: 3 }).then(canvas => {
+                const scaleFactor = window.devicePixelRatio || 1;
+                const canvasWidth = canvas.width / scaleFactor;
+                const canvasHeight = canvas.height / scaleFactor;
+                const scaledCanvas = document.createElement('canvas');
+                scaledCanvas.width = canvasWidth;
+                scaledCanvas.height = canvasHeight;
+                const ctx = scaledCanvas.getContext('2d');
+                ctx.drawImage(canvas, 0, 0, canvasWidth, canvasHeight);
 
-            // Set canvas dimensions
-            canvas.width = cardElement.offsetWidth * scaleFactor;
-            canvas.height = cardElement.offsetHeight * scaleFactor;
-            canvas.style.width = `${cardElement.offsetWidth}px`;
-            canvas.style.height = `${cardElement.offsetHeight}px`;
-
-            const context = canvas.getContext('2d');
-            context.scale(scaleFactor, scaleFactor);
-
-            rasterizeHTML.drawHTML(cardElement.outerHTML, canvas).then(() => {
-                canvas.toBlob(function (blob) {
+                scaledCanvas.toBlob(function (blob) {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
@@ -414,8 +410,6 @@
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
                 }, 'image/jpeg', 0.95);
-            }).catch(error => {
-                console.error("Error rendering HTML to canvas:", error);
             });
         });
 
