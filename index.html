@@ -390,17 +390,14 @@
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            html2canvas(document.querySelector("#card"), { scale: 3 }).then(canvas => {
-                const scaleFactor = window.devicePixelRatio || 1;
-                const canvasWidth = canvas.width / scaleFactor;
-                const canvasHeight = canvas.height / scaleFactor;
-                const scaledCanvas = document.createElement('canvas');
-                scaledCanvas.width = canvasWidth;
-                scaledCanvas.height = canvasHeight;
-                const ctx = scaledCanvas.getContext('2d');
-                ctx.drawImage(canvas, 0, 0, canvasWidth, canvasHeight);
+            const scaleFactor = window.devicePixelRatio || 4; // Or set to 3 or 4
 
-                scaledCanvas.toBlob(function (blob) {
+            html2canvas(document.querySelector("#card"), {
+                scale: scaleFactor,
+                useCORS: true,
+                letterRendering: true, // Optional: Improves text clarity
+            }).then(canvas => {
+                canvas.toBlob(function (blob) {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
