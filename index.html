@@ -390,7 +390,7 @@
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            html2canvas(document.querySelector("#card"), { scale: 10 }).then(canvas => {
+            html2canvas(document.querySelector("#card"), { scale: 2 }).then(canvas => {
                 canvas.toBlob(function (blob) {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -400,7 +400,7 @@
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                }, 'image/jpeg');
+                }, 'image/jpeg', 0.95);
             });
         });
 
