@@ -288,8 +288,8 @@
             if (mode === 'background') {
                 currentBackground += direction;
                 if (currentBackground < 1) {
-                    currentBackground = 26;
-                } else if (currentBackground > 26) {
+                    currentBackground = 30;
+                } else if (currentBackground > 30) {
                     currentBackground = 1;
                 }
                 document.getElementById('card').style.backgroundImage = `url('background${currentBackground}.jpeg')`;
