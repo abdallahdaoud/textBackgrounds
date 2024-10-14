@@ -156,6 +156,7 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rasterizehtml/1.2.4/rasterizeHTML.allinone.js"></script>
 </head>
 
 <body>
@@ -185,6 +186,7 @@
                 </div>
             </div>
         </div>
+        <canvas id="canvas" style="display: none;"></canvas>
         <button class="arrow-button" onclick="changeContent(1)">&gt;</button>
     </div>
     <div class="counter" id="counter">
@@ -389,18 +391,36 @@
 
         window.onload = onPageLoad;
 
+        // Event listener for the download button
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            html2canvas(document.querySelector("#card"), { scale: 2 }).then(canvas => {
+            const canvas = document.getElementById('canvas');
+            const cardElement = document.getElementById('card');
+
+            // Get the HTML content of the card element
+            const cardHTML = cardElement.outerHTML;
+
+            // Set canvas dimensions to match the card element
+            const scaleFactor = window.devicePixelRatio || 1;
+            canvas.width = cardElement.offsetWidth * scaleFactor;
+            canvas.height = cardElement.offsetHeight * scaleFactor;
+
+            // Scale the context to ensure correct rendering
+            const context = canvas.getContext('2d');
+            context.scale(scaleFactor, scaleFactor);
+
+            // Use rasterizeHTML to draw the card HTML onto the canvas
+            rasterizeHTML.drawHTML(cardHTML, canvas).then(function (renderResult) {
+                // Convert the canvas to a Blob and download the image
                 canvas.toBlob(function (blob) {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'card.jpeg';
+                    a.download = 'card.png';
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                }, 'image/jpeg', 0.95);
+                }, 'image/png');
             });
         });
 
