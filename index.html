@@ -154,6 +154,10 @@
             gap: 10px;
             margin-bottom: 20px;
         }
+
+        #jsonApiLink {
+            width: 120px;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
@@ -224,10 +228,19 @@
         </div>
     </div>
     <div class="upload-container">
+        <input type="text" id="jsonApiLink" placeholder="رابط النصوص" class="form-control"
+            onchange="fetchDataFromApi()">
+        <!-- <button class="btn btn-primary" onclick="fetchDataFromApi()">تحميل النصوص</button> -->
         <label for="imageUpload" class="btn btn-primary">تحميل صورة</label>
         <input type="file" id="imageUpload" accept="image/*" onchange="uploadImage()" style="display: none;">
         <a id="btn-Convert-Html2Image" class="btn btn-success" href="#">حفظ الصورة</a>
     </div>
+
+    <!-- New input for JSON API link -->
+    <!-- <div class="json-api-input">
+        <input type="text" id="jsonApiLink" placeholder="أدخل رابط JSON API" class="form-control">
+        <button class="btn btn-primary" onclick="fetchDataFromApi()">تحميل النصوص</button>
+    </div> -->
 
     <script>
         let currentBackground = 1;
@@ -262,21 +275,29 @@
             { color: '#FF5722' }, // Burnt Orange
             { color: '#009688' }, // Teal
         ];
-        const texts = [
-            {
-                "verse": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-                "explanation": "❞ " + "النص" + " ❝",
-                "author": "الكاتب"
-            }
+        const firstText = {
+            "verse": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+            "explanation": "❞ " + "النص" + " ❝",
+            "author": "الكاتب"
+        };
+        let texts = [
+            firstText
         ];
 
-        // Fetch data from the JSON API
-        fetch('https://abdallahdaoud.github.io/cardsJSON/data.json')
-            .then(response => response.json())
-            .then(data => {
-                texts.push(...data);
-            })
-            .catch(error => console.error('Error fetching data:', error));
+        function fetchDataFromApi() {
+            const apiLink = document.getElementById('jsonApiLink').value;
+            if (apiLink) {
+                fetch(apiLink)
+                    .then(response => response.json())
+                    .then(data => {
+                        texts = [firstText,  ...data];
+                        alert('تم تحميل النصوص بنجاح!');
+                    })
+                    .catch(error => console.error('Error fetching data:', error));
+            } else {
+                alert('يرجى إدخال رابط JSON API صالح.');
+            }
+        }
 
         function setMode(newMode, button) {
             mode = newMode;
