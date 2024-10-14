@@ -265,7 +265,7 @@
         const texts = [
             {
                 "verse": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
-                "explanation": "النص",
+                "explanation": "❞ " + "النص" + " ❝",
                 "author": "الكاتب"
             }
         ];
@@ -316,7 +316,7 @@
                 currentTextIndex = (currentTextIndex + direction + texts.length) % texts.length;
                 const textInfo = texts[currentTextIndex];
                 document.getElementById('verse').innerHTML = `<span class="qq">﴿</span> ${textInfo.verse} <span class="qq">﴾</span>`;
-                document.getElementById('explanation').textContent = "❞ " + textInfo.explanation + " ❝";
+                document.getElementById('explanation').textContent = textInfo.explanation;
                 document.getElementById('author').textContent = "- " + textInfo.author + " -";
             }
             updateCounter();
