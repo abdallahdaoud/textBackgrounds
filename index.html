@@ -155,7 +155,7 @@
             margin-bottom: 20px;
         }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rasterizehtml/1.2.4/rasterizeHTML.allinone.js"></script>
 </head>
 
 <body>
@@ -390,7 +390,20 @@
         window.onload = onPageLoad;
 
         document.getElementById('btn-Convert-Html2Image').addEventListener('click', function () {
-            html2canvas(document.querySelector("#card"), { scale: 2 }).then(canvas => {
+            const cardElement = document.getElementById('card');
+            const canvas = document.createElement('canvas');
+            const scaleFactor = window.devicePixelRatio || 1;
+
+            // Set canvas dimensions
+            canvas.width = cardElement.offsetWidth * scaleFactor;
+            canvas.height = cardElement.offsetHeight * scaleFactor;
+            canvas.style.width = `${cardElement.offsetWidth}px`;
+            canvas.style.height = `${cardElement.offsetHeight}px`;
+
+            const context = canvas.getContext('2d');
+            context.scale(scaleFactor, scaleFactor);
+
+            rasterizeHTML.drawHTML(cardElement.outerHTML, canvas).then(() => {
                 canvas.toBlob(function (blob) {
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -401,6 +414,8 @@
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
                 }, 'image/jpeg', 0.95);
+            }).catch(error => {
+                console.error("Error rendering HTML to canvas:", error);
             });
         });
 
