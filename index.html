@@ -395,12 +395,12 @@
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'card.jpeg';
+                    a.download = 'card.png';
                     document.body.appendChild(a);
                     a.click();
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
-                }, 'image/jpeg', 0.95);
+                }, 'image/png', 0.95);
             });
         });
 
